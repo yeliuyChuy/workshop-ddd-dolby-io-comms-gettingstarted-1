@@ -1,4 +1,5 @@
 const initUI = async (token) => {
+	console.log(process.env.VOXEET_CONSUMER_KEY);
 	// Update the login message with the name of the user
 	document.getElementById("name-input").value = randomName;
 	document.getElementById("alias-input").value = "TeamC_Demo";
@@ -230,7 +231,7 @@ const initUI = async (token) => {
 						document.getElementById("process-btn").classList.remove("d-none");
 						
 						console.log(" === Debug ===");
-						console.log(process.env.VOXEET_CONSUMER_KEY);
+						
 						
 						const options = {
 							method: 'GET',
