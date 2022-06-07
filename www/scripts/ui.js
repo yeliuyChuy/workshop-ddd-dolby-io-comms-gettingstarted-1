@@ -178,6 +178,7 @@ const initUI = async () => {
 		
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
+		console.log(" ================ Debug =================");
 		
 		
 
@@ -905,6 +906,7 @@ async function retriveRecordings(conferenceID) {
 				Authorization: `Bearer ${jwttoken}`
 			}
 		};
+
 		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
 		.then(response => response.json())
 		.then(response => console.log(response))
@@ -912,4 +914,11 @@ async function retriveRecordings(conferenceID) {
 	} catch (e) {
 		alert('Something went wrong : ' + e);
 	}
+
+
+	const options = {
+		method: "GET",
+		headers: { Accept: "application/octet-stream", "x-api-key": mAPIKey },
+	};
+
 }
