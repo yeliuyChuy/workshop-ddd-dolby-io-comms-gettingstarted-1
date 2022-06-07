@@ -190,10 +190,12 @@ const initUI = async () => {
 					  Authorization: `Bearer ${results}`
 					}
 				};
-			fetch('https://api.voxeet.com/v1/monitor/recordings?from=0&to=9999999999999&max=100', options)
+
+			fetch(`https://api.voxeet.com/v1/monitor/conferences/${results}/recordings/audio`, options)
 			.then(response => response.json())
 			.then(response => console.log(response))
 			.catch(err => console.error(err));
+
 			console.log(results);
 			}
 			);
