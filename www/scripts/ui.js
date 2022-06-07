@@ -1,5 +1,4 @@
 const initUI = async (token) => {
-	console.log(process.env.VOXEET_CONSUMER_KEY);
 	// Update the login message with the name of the user
 	document.getElementById("name-input").value = randomName;
 	document.getElementById("alias-input").value = "TeamC_Demo";
@@ -179,6 +178,22 @@ const initUI = async (token) => {
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
 		
+		// Bearer Authorization
+		const options = {
+			method: 'POST',
+			headers: {
+			  Accept: 'application/json',
+			  'Cache-Control': 'no-cache',
+			  'Content-Type': 'application/x-www-form-urlencoded',
+			  Authorization: `Basic ${token}`
+			},
+			body: new URLSearchParams({grant_type: 'client_credentials'})
+		  };
+		  console.log(" === Bearer Authorization ===");
+		  fetch('https://api.voxeet.com/v1/auth/token', options)
+			.then(response => response.json())
+			.then(response => console.log(response))
+			.catch(err => console.error(err));
 
 		// for (let participant of participants) {
 		// 	console.log(" === Debug ===");
