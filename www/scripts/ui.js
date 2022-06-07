@@ -213,7 +213,7 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
-						retriveDV(conferenceID);
+						checkIfRecordingsAvailable(conferenceID);
 						//retriveRecordings(conferenceID);
 
 						// console.log(" === Debug ===");
@@ -896,6 +896,37 @@ async function startAudioAnalysis() {
 	}
 }
 
+async function checkIfRecordingsAvailable(conferenceID) {
+
+	let jwttoken = await jwtToken();
+	const options = {
+		method: 'GET',
+		headers: {
+			Accept: 'video/mp4',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${jwttoken}`
+		}
+	};
+	console.log(jwttoken);
+	console.log(conferenceID);
+	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/mp4`, options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
+
+	if (result.status == 401) {
+		console.log("ERROR: Job Failed");
+		throw new Error("Job Failed: authorization data is invalid or expired.");
+	} else if (result.status == 400 || result.status == 404) {
+		await delay(5000);
+		checkIfRecordingsAvailable(conferenceID);
+	} else {
+		console.log("Recording complecated");
+		//let results = getResults(mAPIKey);
+		return results;
+	}
+}
+
 async function retriveDV(conferenceID) {
 	try {
 		let jwttoken = await jwtToken();
@@ -914,6 +945,9 @@ async function retriveDV(conferenceID) {
 		.then(response => response.json())
 		.then(response => console.log(response))
 		.catch(err => console.error(err));
+
+
+		let jobID = await startJob(fileLocation, mAPIKey).then((results) => results);
 	} catch (e) {
 		alert('Something went wrong : ' + e);
 	}
