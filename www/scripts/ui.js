@@ -892,19 +892,24 @@ async function startAudioAnalysis() {
 }
 
 async function retriveRecordings(conferenceID) {
-	let jwttoken = await jwtToken();
-	console.log(jwttoken);
-	console.log(conferenceID);
-	const options = {
-		method: 'GET',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${jwttoken}`
-		}
-	};
-	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+
+	try {
+		let jwttoken = await jwtToken();
+		console.log(jwttoken);
+		console.log(conferenceID);
+		const options = {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${jwttoken}`
+			}
+		};
+		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+		.then(response => response.json())
+		.then(response => console.log(response))
+		.catch(err => console.error(err));
+	} catch (e) {
+		alert('Something went wrong : ' + e);
+	}
 }
