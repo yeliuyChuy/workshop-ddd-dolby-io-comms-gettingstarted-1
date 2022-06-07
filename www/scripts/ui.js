@@ -214,8 +214,8 @@ const initUI = async (token) => {
 						// console.log(conferenceID);
 						// Bearer Authorization
 						let token = await jwtToken();
-						console.log(`=== Debug: ConferenceID - ${conferenceID} ===`);
-						console.log(`=== Debug: JWT Token - ${token} ===`);
+						// console.log(`=== Debug: ConferenceID - ${conferenceID} ===`);
+						// console.log(`=== Debug: JWT Token - ${token} ===`);
 
 						const options = {
 							method: 'GET',
