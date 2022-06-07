@@ -179,6 +179,10 @@ const initUI = async (token) => {
 		let participants = VoxeetSDK.conference.participants;
 		
 		// Bearer Authorization
+		console.log(" === Client Token ===");
+		console.log(token)
+		console.log(" === Bearer Authorization ===");
+		
 		const options = {
 			method: 'POST',
 			headers: {
@@ -189,7 +193,7 @@ const initUI = async (token) => {
 			},
 			body: new URLSearchParams({grant_type: 'client_credentials'})
 		  };
-		  console.log(" === Bearer Authorization ===");
+		  
 		  fetch('https://api.voxeet.com/v1/auth/token', options)
 			.then(response => response.json())
 			.then(response => console.log(response))
