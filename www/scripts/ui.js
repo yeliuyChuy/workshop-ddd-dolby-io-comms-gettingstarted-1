@@ -179,7 +179,8 @@ const initUI = async () => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
-			console.log(jwt.access_token);
+			console.log(participant[0]);
+			
 			const options = {
 				method: 'GET',
 				headers: {
