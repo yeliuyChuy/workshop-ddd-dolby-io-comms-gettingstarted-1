@@ -211,7 +211,9 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
-						retriveRecordings(conferenceID);
+						
+						//retriveRecordings(conferenceID);
+
 						// console.log(" === Debug ===");
 						// let jwttoken = await jwtToken();
 
