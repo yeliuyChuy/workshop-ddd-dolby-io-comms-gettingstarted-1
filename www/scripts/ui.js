@@ -180,6 +180,8 @@ const initUI = async (token) => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
+			console.log(token);
+			
 			await refreshToken()
 			.then((results) => {
 				const options = {
