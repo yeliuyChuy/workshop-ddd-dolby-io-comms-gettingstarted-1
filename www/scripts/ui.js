@@ -179,6 +179,7 @@ const initUI = async (token) => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
+		let token = await jwtToken();
 		
 		
 
@@ -231,7 +232,7 @@ const initUI = async (token) => {
 						// console.log(conferenceID);
 						// console.log(token);
 						// Bearer Authorization
-						let token = await jwtToken();
+						
 						console.log(" === JWT Token ===");
 						console.log(token)
 						console.log(" === Try get recordings ===");
