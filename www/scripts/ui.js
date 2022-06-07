@@ -207,6 +207,8 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
+
+						console.log (`=== Debug: ConferenceID - ${conferenceID}`);
 						retriveRecordings(conferenceID);
 						// console.log(" === Debug ===");
 						// let jwttoken = await jwtToken();
@@ -911,7 +913,6 @@ async function startAudioAnalysis() {
 }
 
 async function retriveRecordings(conferenceID) {
-	console.log(" === Debug ===");
 	let jwttoken = await jwtToken();
 
 	const options = {
@@ -922,7 +923,7 @@ async function retriveRecordings(conferenceID) {
 			Authorization: `Bearer ${jwttoken}`
 		}
 	};
-	
+	console.log (`=== Debug: JWT Token - ${jwttoken}`);
 	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
 	.then(response => response.json())
 	.then(response => console.log(response))
