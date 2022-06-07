@@ -248,20 +248,20 @@ const initUI = async (token) => {
 						console.log(" === Debug ===");
 						
 						
-						const options = {
-							method: 'GET',
-							headers: {
-							Accept: 'application/json',
-							'Content-Type': 'application/json',
-							Authorization: `Bearer ${token}`
-							}
-						};
-						fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-						.then(response => response.json())
-						.then(response => console.log(response))
-						.catch(err => console.error(err));
-						console.log(conferenceID);
-						console.log(token);
+						// const options = {
+						// 	method: 'GET',
+						// 	headers: {
+						// 	Accept: 'application/json',
+						// 	'Content-Type': 'application/json',
+						// 	Authorization: `Bearer ${token}`
+						// 	}
+						// };
+						// fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+						// .then(response => response.json())
+						// .then(response => console.log(response))
+						// .catch(err => console.error(err));
+						// console.log(conferenceID);
+						// console.log(token);
 						
 					})
 					.catch((err) => console.error(err));
