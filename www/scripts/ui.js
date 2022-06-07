@@ -178,24 +178,24 @@ const initUI = async (token) => {
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
 
-		for (let participant of participants) {
-			console.log(" === Debug ===");
-			//console.log(token);
-			const options = {
-				method: 'GET',
-				headers: {
-				  Accept: 'application/json',
-				  'Content-Type': 'application/json',
-				  Authorization: `Bearer ${token}`
-				}
-			};
-			fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-			.then(response => response.json())
-			.then(response => console.log(response))
-			.catch(err => console.error(err));
-			console.log(conferenceID);
-			console.log(token);
-		}
+		// for (let participant of participants) {
+		// 	console.log(" === Debug ===");
+		// 	//console.log(token);
+		// 	const options = {
+		// 		method: 'GET',
+		// 		headers: {
+		// 		  Accept: 'application/json',
+		// 		  'Content-Type': 'application/json',
+		// 		  Authorization: `Bearer ${token}`
+		// 		}
+		// 	};
+		// 	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+		// 	.then(response => response.json())
+		// 	.then(response => console.log(response))
+		// 	.catch(err => console.error(err));
+		// 	console.log(conferenceID);
+		// 	console.log(token);
+		// }
 
 		
 
@@ -227,6 +227,23 @@ const initUI = async (token) => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
+						
+						console.log(" === Debug ===");
+						const options = {
+							method: 'GET',
+							headers: {
+							Accept: 'application/json',
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${token}`
+							}
+						};
+						fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+						.then(response => response.json())
+						.then(response => console.log(response))
+						.catch(err => console.error(err));
+						console.log(conferenceID);
+						console.log(token);
+						
 					})
 					.catch((err) => console.error(err));
 			})
