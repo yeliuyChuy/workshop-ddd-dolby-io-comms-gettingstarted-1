@@ -902,14 +902,14 @@ async function checkIfRecordingsAvailable(conferenceID) {
 	const options = {
 		method: 'GET',
 		headers: {
-			Accept: 'video/mp4',
+			Accept: 'application/json',
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${jwttoken}`
 		}
 	};
 	console.log(jwttoken);
 	console.log(conferenceID);
-	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/mp4`, options).then((response) =>
+	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options).then((response) =>
 	response.json()
 	);
 	console.log(result);
@@ -918,7 +918,7 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		console.log("ERROR: Job Failed");
 		throw new Error("Job Failed: authorization data is invalid or expired.");
 	} else if (result.status == 400 || result.status == 404) {
-		await delay(5000);
+		await delay(10000);
 		checkIfRecordingsAvailable(conferenceID);
 	} else {
 		console.log("Recording complecated");
