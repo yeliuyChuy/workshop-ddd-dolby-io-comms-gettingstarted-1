@@ -909,7 +909,7 @@ async function retriveMp4(conferenceID) {
 				Authorization: `Bearer ${jwttoken}`
 			}
 		};
-
+		await delay(10000);
 		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/mp4`, options)
 		.then(response => response.json())
 		.then(response => console.log(response))
