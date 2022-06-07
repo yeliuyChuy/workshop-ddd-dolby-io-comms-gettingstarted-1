@@ -691,8 +691,8 @@ const addMuteListeners = () => {
 const validFiles = ["wav", "mp3", "mp4", "m4a", "mov", "3gp", "m4b", "acc"]; //https://docs.dolby.io/media-apis/docs/supported-formats
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-async function refreshToken() {
-	return fetch(tokenServerURL, {
+async function jwtToken() {
+	return fetch(jwtServerURL, {
 	  method: 'post'
 	})
 	  .then((res) => {
@@ -702,7 +702,7 @@ async function refreshToken() {
 	  .catch((error) => {
 		console.error(error);
 	  });
-  }
+}
 
 async function getResults() {
 	//Gets and displays the results of the Analyze job
@@ -915,37 +915,3 @@ async function startAudioAnalysis() {
 		document.getElementById("fileSize").innerHTML = "File Size: 0";
 	}
 }
-
-
-async function jwtToken() {
-	return fetch(jwtServerURL, {
-	  method: 'post'
-	})
-	  .then((res) => {
-		return res.json();
-	  })
-	  .then((json) => json.access_token)
-	  .catch((error) => {
-		console.error(error);
-	  });
-  }
-
-// const getAccessToken = () => {
-//     return new Promise((resolve, reject) => {
-//         const authUrl = `https://api.voxeet.com/v1/auth/token`;
-//         $.ajax({
-//             async : true,
-//             type: "POST",
-//             url: authUrl,
-//             contentType: "application/x-www-form-urlencoded",
-//             data: "grant_type=client_credentials",
-//             headers: {
-//                 "Authorization": "Basic: " + btoa(`${consumerKey}:${consumerSecret}`),
-//             }
-//         }).done(function (data) {
-//             resolve(data);
-//         }).fail(function (err) {
-//             reject(err);
-//         });
-//     })
-// };
