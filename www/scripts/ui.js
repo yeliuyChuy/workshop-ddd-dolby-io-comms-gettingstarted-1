@@ -184,20 +184,18 @@ const initUI = async (token) => {
 		let token = await jwtToken();
 		console.log(" === JWT Token ===");
 		console.log(token)
-		// console.log(" === Bearer Authorization ===");
+		console.log(" === Try get recordings ===");
 
 		const options = {
-			method: 'POST',
+			method: 'GET',
 			headers: {
 			  Accept: 'application/json',
-			  'Cache-Control': 'no-cache',
-			  'Content-Type': 'application/x-www-form-urlencoded',
-			  Authorization: `Basic ${token}`
-			},
-			body: new URLSearchParams({grant_type: 'client_credentials'})
+			  'Content-Type': 'application/json',
+			  Authorization: `Bearer ${token}`
+			}
 		  };
 		  
-		  fetch('https://api.voxeet.com/v1/auth/token', options)
+		  fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
 			.then(response => response.json())
 			.then(response => console.log(response))
 			.catch(err => console.error(err));
