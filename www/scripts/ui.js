@@ -909,10 +909,10 @@ async function checkIfRecordingsAvailable(conferenceID) {
 	};
 	console.log(jwttoken);
 	console.log(conferenceID);
-	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/mp4`, options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
+	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/mp4`, options).then((response) =>
+	response.json()
+	);
+	console.log(result);
 
 	if (result.status == 401) {
 		console.log("ERROR: Job Failed");
