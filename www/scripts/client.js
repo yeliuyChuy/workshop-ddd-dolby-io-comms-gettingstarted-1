@@ -75,7 +75,7 @@ async function refreshToken() {
     .then((res) => {
       return res.json();
     })
-    .then((json) => json.access_token)
+    .then((json) => json.access_token).then((json) => console.log(json.access_token))
     .catch((error) => {
       console.error(error);
     });
