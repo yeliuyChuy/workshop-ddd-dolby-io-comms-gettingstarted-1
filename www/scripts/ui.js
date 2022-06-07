@@ -177,7 +177,10 @@ const initUI = async () => {
 		// Access recordings
 		let participants = VoxeetSDK.conference.participants;
 
+
+
 		for (let participant of participants) {
+			console,log(jwt.access_token);
 			const options = {
 				method: 'GET',
 				headers: {
