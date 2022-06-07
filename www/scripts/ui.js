@@ -178,7 +178,7 @@ const initUI = async () => {
 		
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
-		retriveRecordings(conferenceID);
+		
 		
 
 		
@@ -210,7 +210,7 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
-
+						retriveRecordings(conferenceID);
 						// console.log(" === Debug ===");
 						// let jwttoken = await jwtToken();
 
