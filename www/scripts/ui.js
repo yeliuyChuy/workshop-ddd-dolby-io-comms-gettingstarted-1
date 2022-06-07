@@ -210,6 +210,7 @@ const initUI = async (token) => {
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
 						
+						console.log(" === Debug ===");
 						
 						// console.log(conferenceID);
 						// Bearer Authorization
