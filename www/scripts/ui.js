@@ -179,6 +179,7 @@ const initUI = async () => {
 			.then(() => {
 				// See Docs:  https://docs.dolby.io/communications-apis/docs/initializing-javascript#open-a-session
 				// close the session
+				downloadRecordings();
 				VoxeetSDK.session
 					.close()
 					.then(() => {
@@ -307,8 +308,9 @@ const initUI = async () => {
 	};
 
 	// Add-on button for downloading recordings
-	let conferenceID = VoxeetSDK.conference.current.id;
-	const options = {
+	const downloadRecordings = () => {
+		let conferenceID = VoxeetSDK.conference.current.id;
+		const options = {
 		method: 'GET',
 		headers: {
 		  Accept: 'audio/mpeg',
@@ -321,6 +323,9 @@ const initUI = async () => {
 		  .then(response => response.json())
 		  .then(response => console.log(response))
 		  .catch(err => console.error(err));
+	};
+
+	
 
 	// document.getElementById("start-recording-btn").onclick = async () => {
 	// 	let recordStatus = document.getElementById("record-status");
