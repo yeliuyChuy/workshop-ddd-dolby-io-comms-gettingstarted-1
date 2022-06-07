@@ -179,12 +179,6 @@ const initUI = async () => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
-		
-		
-		
-
-		
-
 
 		VoxeetSDK.conference
 			.leave()
@@ -213,23 +207,23 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
-						
-						console.log(" === Debug ===");
-						let jwttoken = await jwtToken();
+						retriveRecordings(conferenceID);
+						// console.log(" === Debug ===");
+						// let jwttoken = await jwtToken();
 
-						const options = {
-							method: 'GET',
-							headers: {
-								Accept: 'application/json',
-								'Content-Type': 'application/json',
-								Authorization: `Bearer ${jwttoken}`
-							}
-							};
+						// const options = {
+						// 	method: 'GET',
+						// 	headers: {
+						// 		Accept: 'application/json',
+						// 		'Content-Type': 'application/json',
+						// 		Authorization: `Bearer ${jwttoken}`
+						// 	}
+						// 	};
 							
-							fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-							.then(response => response.json())
-							.then(response => console.log(response))
-							.catch(err => console.error(err));
+						// 	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+						// 	.then(response => response.json())
+						// 	.then(response => console.log(response))
+						// 	.catch(err => console.error(err));
 						
 					})
 					.catch((err) => console.error(err));
@@ -914,4 +908,23 @@ async function startAudioAnalysis() {
 		document.getElementById("myBtn").disabled = true;
 		document.getElementById("fileSize").innerHTML = "File Size: 0";
 	}
+}
+
+async function retriveRecordings(conferenceID) {
+	console.log(" === Debug ===");
+	let jwttoken = await jwtToken();
+
+	const options = {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${jwttoken}`
+		}
+	};
+	
+	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
 }
