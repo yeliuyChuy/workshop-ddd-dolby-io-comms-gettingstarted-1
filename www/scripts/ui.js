@@ -181,7 +181,7 @@ const initUI = async () => {
 		// retriveRecordings(conferenceID);
 		try {
 			let jwttoken = await jwtToken();
-			await delay(1000); 
+			await delay(5000); 
 
 			const options = {
 				method: 'GET',
