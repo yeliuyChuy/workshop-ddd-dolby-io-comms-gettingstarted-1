@@ -179,6 +179,8 @@ const initUI = async () => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
+		console.log (`=== Debug: ConferenceID - ${conferenceID}`);
+		retriveRecordings(conferenceID);
 
 		VoxeetSDK.conference
 			.leave()
@@ -208,8 +210,7 @@ const initUI = async () => {
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
 
-						console.log (`=== Debug: ConferenceID - ${conferenceID}`);
-						retriveRecordings(conferenceID);
+						
 						// console.log(" === Debug ===");
 						// let jwttoken = await jwtToken();
 
