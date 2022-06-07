@@ -180,8 +180,8 @@ const initUI = async () => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
-			//refreshToken().result;
-			refreshToken().then(response => response.result())
+			refreshToken();
+			//refreshToken().then(response => response.result())
 
 			const options = {
 				method: 'GET',
