@@ -1,3 +1,5 @@
+const jwtServerURL = './api/bearer-authorization';
+
 const initUI = async (token) => {
 	// Update the login message with the name of the user
 	document.getElementById("name-input").value = randomName;
@@ -179,8 +181,9 @@ const initUI = async (token) => {
 		let participants = VoxeetSDK.conference.participants;
 		
 		// Bearer Authorization
-		// console.log(" === Client Token ===");
-		// console.log(token)
+		let token = await jwtToken();
+		console.log(" === JWT Token ===");
+		console.log(token)
 		// console.log(" === Bearer Authorization ===");
 
 		const options = {
@@ -932,6 +935,20 @@ async function startAudioAnalysis() {
 		document.getElementById("fileSize").innerHTML = "File Size: 0";
 	}
 }
+
+
+async function jwtToken() {
+	return fetch(jwtServerURL, {
+	  method: 'post'
+	})
+	  .then((res) => {
+		return res.json();
+	  })
+	  .then((json) => json.access_token)
+	  .catch((error) => {
+		console.error(error);
+	  });
+  }
 
 // const getAccessToken = () => {
 //     return new Promise((resolve, reject) => {
