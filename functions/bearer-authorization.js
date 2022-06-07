@@ -10,7 +10,7 @@ const SITE_URL = process.env.URL;
 const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const credentials = new Buffer.from(CONSUMER_KEY + ":" + CONSUMER_SECRET).toString("base64");
-const url = "https://session.voxeet.com/v1/oauth2/token";
+const url = "https://api.voxeet.com/v1/auth/token";
 const config = {
 	headers: {
 		Authorization: "Basic " + credentials,
