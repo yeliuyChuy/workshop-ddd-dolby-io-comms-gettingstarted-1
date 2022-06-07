@@ -1,4 +1,3 @@
-const tokenServerURL = './api/token-generator';
 const initUI = async () => {
 	// Update the login message with the name of the user
 	document.getElementById("name-input").value = randomName;
@@ -176,6 +175,7 @@ const initUI = async () => {
 			.catch((err) => console.error(err));
 		
 		// Access recordings
+		
 		let participants = VoxeetSDK.conference.participants;
 
 		for (let participant of participants) {
