@@ -211,7 +211,7 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
-						
+
 						//retriveRecordings(conferenceID);
 
 						// console.log(" === Debug ===");
@@ -894,33 +894,26 @@ async function startAudioAnalysis() {
 	}
 }
 
-async function retriveRecordings(conferenceID) {
+// async function retriveRecordings(conferenceID) {
 
-	try {
-		let jwttoken = await jwtToken();
-		console.log(jwttoken);
-		console.log(conferenceID);
-		const options = {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${jwttoken}`
-			}
-		};
+// 	try {
+// 		let jwttoken = await jwtToken();
+// 		console.log(jwttoken);
+// 		console.log(conferenceID);
+// 		const options = {
+// 			method: 'GET',
+// 			headers: {
+// 				Accept: 'application/json',
+// 				'Content-Type': 'application/json',
+// 				Authorization: `Bearer ${jwttoken}`
+// 			}
+// 		};
 
-		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-		.then(response => response.json())
-		.then(response => console.log(response))
-		.catch(err => console.error(err));
-	} catch (e) {
-		alert('Something went wrong : ' + e);
-	}
-
-
-	const options = {
-		method: "GET",
-		headers: { Accept: "application/octet-stream", "x-api-key": mAPIKey },
-	};
-
-}
+// 		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+// 		.then(response => response.json())
+// 		.then(response => console.log(response))
+// 		.catch(err => console.error(err));
+// 	} catch (e) {
+// 		alert('Something went wrong : ' + e);
+// 	}
+// }
