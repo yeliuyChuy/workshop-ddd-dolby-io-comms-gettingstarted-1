@@ -57,7 +57,7 @@ const main = async () => {
     await VoxeetSDK.initializeToken(token, refreshToken);
 
     // Initialize the UI
-    // initUI(token);
+    initUI(token);
   } catch (e) {
     alert('Something went wrong : ' + e);
   }
