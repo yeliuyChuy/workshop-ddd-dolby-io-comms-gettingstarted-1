@@ -213,7 +213,16 @@ const initUI = async () => {
 						document.getElementById("uploadInput").disabled = false;
 						document.getElementById("upload-btn").classList.remove("d-none");
 						document.getElementById("process-btn").classList.remove("d-none");
-						checkIfRecordingsAvailable(conferenceID);
+
+
+						try {
+							let results = checkIfRecordingsAvailable(conferenceID).then((results) => results);
+						} catch (e) {
+							alert('Something went wrong : ' + e);
+						}
+
+						let results = await checkJobStatus(jobID, mAPIKey).then((results) => results);
+						console.log(results);
 						//retriveRecordings(conferenceID);
 
 						// console.log(" === Debug ===");
@@ -907,12 +916,12 @@ async function checkIfRecordingsAvailable(conferenceID) {
 			Authorization: `Bearer ${jwttoken}`
 		}
 	};
-	console.log(jwttoken);
-	console.log(conferenceID);
+	// console.log(jwttoken);
+	// console.log(conferenceID);
 	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options).then((response) =>
 	response.json()
 	);
-	console.log(result);
+	console.log("Recordings are still in processing ...");
 
 	if (result.status == 401) {
 		console.log("ERROR: Job Failed");
@@ -921,7 +930,7 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		await delay(10000);
 		checkIfRecordingsAvailable(conferenceID);
 	} else {
-		console.log("Recording complecated");
+		console.log("Recordings are available now !");
 		//let results = getResults(mAPIKey);
 		return results;
 	}
