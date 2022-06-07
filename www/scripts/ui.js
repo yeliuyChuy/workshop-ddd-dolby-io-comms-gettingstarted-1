@@ -179,7 +179,7 @@ const initUI = async (token) => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
-		let token = await jwtToken();
+		//let token = await jwtToken();
 		
 		
 
