@@ -893,6 +893,8 @@ async function startAudioAnalysis() {
 
 async function retriveRecordings(conferenceID) {
 	let jwttoken = await jwtToken();
+	console.log(jwttoken);
+	console.log(conferenceID);
 	const options = {
 		method: 'GET',
 		headers: {
