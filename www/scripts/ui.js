@@ -1,3 +1,4 @@
+const tokenServerURL = './api/token-generator';
 const initUI = async () => {
 	// Update the login message with the name of the user
 	document.getElementById("name-input").value = randomName;
@@ -144,7 +145,6 @@ const initUI = async () => {
 						if (videoDevices.options.length == 0) {
 							enumerateMediaDevices();
 						}
-						refreshToken();
 						VoxeetSDK.recording
 							.start()
 							.then(() => {
@@ -180,7 +180,7 @@ const initUI = async () => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
-			console.log(refreshToken());
+			refreshToken();
 
 			const options = {
 				method: 'GET',
