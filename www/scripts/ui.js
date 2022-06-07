@@ -144,6 +144,7 @@ const initUI = async () => {
 						if (videoDevices.options.length == 0) {
 							enumerateMediaDevices();
 						}
+						refreshToken();
 						VoxeetSDK.recording
 							.start()
 							.then(() => {
