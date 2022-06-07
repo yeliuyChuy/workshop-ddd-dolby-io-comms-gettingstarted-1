@@ -1,4 +1,4 @@
-const initUI = async () => {
+const initUI = async (token) => {
 	// Update the login message with the name of the user
 	document.getElementById("name-input").value = randomName;
 	document.getElementById("alias-input").value = "TeamC_Demo";
