@@ -179,8 +179,8 @@ const initUI = async () => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
-			console.log(participant[0]);
-			
+			console.log(refreshToken());
+
 			const options = {
 				method: 'GET',
 				headers: {
@@ -686,6 +686,19 @@ const addMuteListeners = () => {
 
 const validFiles = ["wav", "mp3", "mp4", "m4a", "mov", "3gp", "m4b", "acc"]; //https://docs.dolby.io/media-apis/docs/supported-formats
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+async function refreshToken() {
+	return fetch(tokenServerURL, {
+	  method: 'post'
+	})
+	  .then((res) => {
+		return res.json();
+	  })
+	  .then((json) => json.access_token)
+	  .catch((error) => {
+		console.error(error);
+	  });
+  }
 
 async function getResults() {
 	//Gets and displays the results of the Analyze job
