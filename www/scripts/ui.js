@@ -178,7 +178,9 @@ const initUI = async () => {
 		
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
-		console.log(" ================ Debug =================");
+		let jwttoken = await jwtToken();
+		console.log(conferenceID);
+		console.log(jwttoken);
 		
 		
 
