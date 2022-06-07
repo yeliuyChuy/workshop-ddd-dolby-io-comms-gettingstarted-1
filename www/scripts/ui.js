@@ -178,9 +178,27 @@ const initUI = async () => {
 		
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
-		let participants = VoxeetSDK.conference.participants;
-		console.log (`=== Debug: ConferenceID - ${conferenceID}`);
-		retriveRecordings(conferenceID);
+		// retriveRecordings(conferenceID);
+		try {
+			let jwttoken = await jwtToken();
+
+			const options = {
+				method: 'GET',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${jwttoken}`
+				}
+			};
+			fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
+			.then(response => response.json())
+			.then(response => console.log(response))
+			.catch(err => console.error(err));
+		  } catch (e) {
+			alert('Something went wrong : ' + e);
+		}
+
+		
 
 		VoxeetSDK.conference
 			.leave()
@@ -335,28 +353,6 @@ const initUI = async () => {
 			})
 			.catch((err) => console.error(err));
 	};
-
-	// Add-on button for downloading recordings
-	const downloadRecordings = () => {
-		let conferenceID = VoxeetSDK.conference.current.id;
-		console.log(" === Debug Logging ===")
-		console.log(conferenceID)
-
-	// 	const options = {
-	// 	method: 'GET',
-	// 	headers: {
-	// 	  Accept: 'audio/mpeg',
-	// 	  'Content-Type': 'application/json',
-	// 	  Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJraWQiOiI1ODExQjE0RS1DQzVCLTQ4QkQtQTNEOC1DREQxQzUzQ0ZDNUMiLCJhbGciOiJSUzUxMiJ9.eyJpc3MiOiJkb2xieS5pbyIsImlhdCI6MTY1NDU3NTc1MSwic3ViIjoiTjlIMEZ5Ym45SjlPaHozdHI5LVk5Zz09Iiwic2NvcGUiOiJhcGkiLCJvaWQiOiIyNzc0NTY1Yi00YzFjLTQ1MWUtOWRkMy1lNTgzNzg4ZWJiY2EiLCJiaWQiOiI4YTM2ODFjOTgxMDg1ZWFmMDE4MTIyZmVmOTY5NmU0NCIsImFpZCI6ImVlNTJlYmM1LThjMmQtNGMxNS05NGY4LTNiMTJjYjM5MjA3OCIsImF1dGhvcml0aWVzIjpbIlJPTEVfQ1VTVE9NRVIiXSwiZXhwIjoxNjU0NTc2MzUxfQ.DCRPoI4xjGjxhpSPwGwk1UX0yYP9rDXe3XY5TTNhVweOy1iiRsndon6GmQGOGV2CNDRteOM-_t4Gn9sR2I67OOyt0oCZ6zk3eI5oQNb_QT6ik0W9TFv4ey5Kp1atnHgawAxA_krN0EAUbvmwv6mNNGO6SVopjdHni0RAA94ck5_liADZWKYnNla_xRvZ-EjX9t7aD5ieJv0Ig84fI_V8zk5e5XK0kHNT5ehfpMQJVmpZcApkj33TGsVUqh9Q87ciy5qXz2FkgNvLwlSt5nsr9AICZNOt2bCmbtJH_wv_u1dOS7davCFF6kn-ccvpGm4WK-rN35ETmFcpJZuKaKd6hIvBiuhsa4Lh2p2FTgQUrTshmCtCz3JONXyjpOEht036_8cluHpYs7MDHNBB1UEDFYdJt45kWiGqosm3Xgct_Z6BVMoAM3bLc2yVfP172nL07QoIpSrTPNdHzNxXgfmVMzh5NjwmR0txdjQcFwMryeT2SmL6PKfLZs34TQkcX16kt8LZjwPK2nce3KP0RHC1kKMwMzU1f9TuR4tKxu7zsZXL-iIQBC4JxS8KgDjpvYh00fPnYZYSVokOB0NEbmPHWlI92DrWyk59st0SMNLXkA3mE7Pl7zfe5AdZ1_59Fsg_iOIiJF8sMknpkGQREIol2iUqHFf44NLZWb18aYt3WMk'
-	// 	}
-	//   };
-	  
-	//   fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-	// 	  .then(response => response.json())
-	// 	  .then(response => console.log(response))
-	// 	  .catch(err => console.error(err));
-	};
-
 	
 
 	// document.getElementById("start-recording-btn").onclick = async () => {
@@ -924,7 +920,6 @@ async function retriveRecordings(conferenceID) {
 			Authorization: `Bearer ${jwttoken}`
 		}
 	};
-	console.log (`=== Debug: JWT Token - ${jwttoken}`);
 	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
 	.then(response => response.json())
 	.then(response => console.log(response))
