@@ -179,7 +179,7 @@ const initUI = async (token) => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
-		//let token = await jwtToken();
+		
 		
 		
 
@@ -215,34 +215,14 @@ const initUI = async (token) => {
 						document.getElementById("process-btn").classList.remove("d-none");
 						
 						console.log(" === Debug ===");
-						
-						
-						// const options = {
-						// 	method: 'GET',
-						// 	headers: {
-						// 	Accept: 'application/json',
-						// 	'Content-Type': 'application/json',
-						// 	Authorization: `Bearer ${token}`
-						// 	}
-						// };
-						// fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-						// .then(response => response.json())
-						// .then(response => console.log(response))
-						// .catch(err => console.error(err));
-						// console.log(conferenceID);
-						// console.log(token);
-						// Bearer Authorization
-						
-						console.log(" === JWT Token ===");
-						console.log(token)
-						console.log(" === Try get recordings ===");
+						let jwttoken = await jwtToken();
 
 						const options = {
 							method: 'GET',
 							headers: {
 								Accept: 'application/json',
 								'Content-Type': 'application/json',
-								Authorization: `Bearer ${token}`
+								Authorization: `Bearer ${jwttoken}`
 							}
 							};
 							
