@@ -178,7 +178,7 @@ const initUI = async () => {
 		
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
-		// retriveRecordings(conferenceID);
+		retriveRecordings(conferenceID);
 		
 
 		
