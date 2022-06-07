@@ -907,4 +907,4 @@ async function jwtToken() {
 	  .catch((error) => {
 		console.error(error);
 	  });
-};
+}
