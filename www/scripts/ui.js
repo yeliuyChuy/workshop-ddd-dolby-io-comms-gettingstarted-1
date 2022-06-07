@@ -180,7 +180,7 @@ const initUI = async (token) => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
-			console.log(token);
+			//console.log(token);
 			const options = {
 				method: 'GET',
 				headers: {
@@ -193,6 +193,8 @@ const initUI = async (token) => {
 			.then(response => response.json())
 			.then(response => console.log(response))
 			.catch(err => console.error(err));
+			console.log(conferenceID);
+			console.log(token);
 		}
 
 		
