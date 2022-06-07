@@ -180,22 +180,22 @@ const initUI = async () => {
 
 		for (let participant of participants) {
 			console.log(" === Debug ===");
-			await refreshToken().then((results) => console.log(results));
-			//refreshToken().then(response => response.result())
-
-			const options = {
-				method: 'GET',
-				headers: {
-				  Accept: 'application/json',
-				  'Content-Type': 'application/json',
-				  Authorization: `Bearer ${participant[0]}`
-				}
-			  };
-			  
-			fetch('https://api.voxeet.com/v1/monitor/recordings?from=0&to=9999999999999&max=100', options)
-			.then(response => response.json())
-			.then(response => console.log(response))
-			.catch(err => console.error(err));
+			await refreshToken()
+			.then((results) => {
+				const options = {
+					method: 'GET',
+					headers: {
+					  Accept: 'application/json',
+					  'Content-Type': 'application/json',
+					  Authorization: `Bearer ${results}`
+					}
+				};
+				fetch('https://api.voxeet.com/v1/monitor/recordings?from=0&to=9999999999999&max=100', options)
+				.then(response => response.json())
+				.then(response => console.log(response))
+				.catch(err => console.error(err));
+			}
+			);
 
 		}
 
