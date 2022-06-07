@@ -214,7 +214,8 @@ const initUI = async () => {
 						try {
 							let jwttoken = await jwtToken();
 							await delay(5000); 
-							console.debug(jwttoken);
+							console.log(" === Debug ===");
+							console.log(jwttoken);
 							const options = {
 								method: 'GET',
 								headers: {
