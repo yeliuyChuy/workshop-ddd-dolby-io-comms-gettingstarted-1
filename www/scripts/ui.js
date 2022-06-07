@@ -310,6 +310,9 @@ const initUI = async () => {
 	// Add-on button for downloading recordings
 	const downloadRecordings = () => {
 		let conferenceID = VoxeetSDK.conference.current.id;
+
+		console.log(conferenceID)
+
 		const options = {
 		method: 'GET',
 		headers: {
