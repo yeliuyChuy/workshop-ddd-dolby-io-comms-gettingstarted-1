@@ -177,6 +177,7 @@ const initUI = async (token) => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
+		
 
 		// for (let participant of participants) {
 		// 	console.log(" === Debug ===");
@@ -229,6 +230,8 @@ const initUI = async (token) => {
 						document.getElementById("process-btn").classList.remove("d-none");
 						
 						console.log(" === Debug ===");
+						console.log(process.env.VOXEET_CONSUMER_KEY);
+						
 						const options = {
 							method: 'GET',
 							headers: {
@@ -928,3 +931,23 @@ async function startAudioAnalysis() {
 		document.getElementById("fileSize").innerHTML = "File Size: 0";
 	}
 }
+
+// const getAccessToken = () => {
+//     return new Promise((resolve, reject) => {
+//         const authUrl = `https://api.voxeet.com/v1/auth/token`;
+//         $.ajax({
+//             async : true,
+//             type: "POST",
+//             url: authUrl,
+//             contentType: "application/x-www-form-urlencoded",
+//             data: "grant_type=client_credentials",
+//             headers: {
+//                 "Authorization": "Basic: " + btoa(`${consumerKey}:${consumerSecret}`),
+//             }
+//         }).done(function (data) {
+//             resolve(data);
+//         }).fail(function (err) {
+//             reject(err);
+//         });
+//     })
+// };
