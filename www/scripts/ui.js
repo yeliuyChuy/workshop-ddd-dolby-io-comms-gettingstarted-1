@@ -179,10 +179,10 @@ const initUI = async (token) => {
 		let participants = VoxeetSDK.conference.participants;
 		
 		// Bearer Authorization
-		console.log(" === Client Token ===");
-		console.log(token)
-		console.log(" === Bearer Authorization ===");
-		
+		// console.log(" === Client Token ===");
+		// console.log(token)
+		// console.log(" === Bearer Authorization ===");
+
 		const options = {
 			method: 'POST',
 			headers: {

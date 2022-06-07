@@ -11,6 +11,7 @@ const CONSUMER_KEY = process.env.CONSUMER_KEY;
 const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 const credentials = new Buffer.from(CONSUMER_KEY + ":" + CONSUMER_SECRET).toString("base64");
 const url = "https://session.voxeet.com/v1/oauth2/token";
+const bearer_url = "https://session.voxeet.com/v1/oauth2/token";
 const config = {
 	headers: {
 		Authorization: "Basic " + credentials,
@@ -23,6 +24,8 @@ async function fetchToken() {
 	try {
 		const response = await axios.post(url, data, config);
 		const { access_token, refresh_token, expires_in } = response.data;
+		console.log("+++++++++");
+		console.log(access_token);
 		return {
 			statusCode: 200,
 			headers: {
