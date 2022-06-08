@@ -903,12 +903,12 @@ async function startAudioAnalysis() {
 	}
 }
 
-async function downloadRecordings(conferenceID) {
+// async function downloadRecordings(conferenceID) {
 
-	let fileLocation = await Promise.resolve(checkIfRecordingsAvailable(conferenceID).then((results.records) => results));
+// 	let fileLocation = await Promise.resolve(checkIfRecordingsAvailable(conferenceID).then((results.records) => results));
 	
 
-}
+// }
 
 async function checkIfRecordingsAvailable(conferenceID) {
 
