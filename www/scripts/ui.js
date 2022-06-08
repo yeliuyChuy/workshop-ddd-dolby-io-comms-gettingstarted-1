@@ -903,13 +903,6 @@ async function startAudioAnalysis() {
 	}
 }
 
-// async function downloadRecordings(conferenceID) {
-
-// 	let fileLocation = await Promise.resolve(checkIfRecordingsAvailable(conferenceID).then((results.records) => results));
-	
-
-// }
-
 async function checkIfRecordingsAvailable(conferenceID) {
 
 	let jwttoken = await jwtToken();
@@ -936,8 +929,9 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		checkIfRecordingsAvailable(conferenceID);
 	} else {
 		console.log("Recordings are available now !");
-		console.log("++++++++++++++++++++++++++++");
-		console.log(result.records.splits);
+		console.log("--------------------");
+		const recording = result.records;
+		console.log(recording.splits);
 		return result;
 	}
 }
