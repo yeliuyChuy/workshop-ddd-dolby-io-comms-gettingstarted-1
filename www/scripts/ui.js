@@ -903,6 +903,13 @@ async function startAudioAnalysis() {
 	}
 }
 
+async function downloadRecordings(conferenceID) {
+
+	let fileLocation = await Promise.resolve(checkIfRecordingsAvailable(conferenceID).then((results.records) => results));
+	
+
+}
+
 async function checkIfRecordingsAvailable(conferenceID) {
 
 	let jwttoken = await jwtToken();
@@ -930,39 +937,12 @@ async function checkIfRecordingsAvailable(conferenceID) {
 	} else {
 		console.log("Recordings are available now !");
 		//let results = getResults(mAPIKey);
-		let recordings = result.records.splits.url;
-		console.log(recordings);
+		//let recordings = result.records.splits.url;
+		console.log(result);
 		//for (let participant of participants) {
-		return recordings;
+		return result;
 	}
 }
-
-async function retriveDV(conferenceID) {
-	try {
-		let jwttoken = await jwtToken();
-		console.log(jwttoken);
-		console.log(conferenceID);
-		const options = {
-			method: 'GET',
-			headers: {
-				Accept: 'video/mp4',
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${jwttoken}`
-			}
-		};
-		await delay(60000);
-		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/mp4`, options)
-		.then(response => response.json())
-		.then(response => console.log(response))
-		.catch(err => console.error(err));
-
-
-		let jobID = await startJob(fileLocation, mAPIKey).then((results) => results);
-	} catch (e) {
-		alert('Something went wrong : ' + e);
-	}
-}
-
 
 // async function retriveRecordings(conferenceID) {
 
