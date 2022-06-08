@@ -913,8 +913,8 @@ async function checkIfRecordingsAvailable(conferenceID) {
 			Authorization: `Bearer ${jwttoken}`
 		}
 	};
-	console.log(jwttoken);
-	console.log(conferenceID);
+	// console.log(jwttoken);
+	// console.log(conferenceID);
 	let result = await fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options).then((response) =>
 	response.json()
 	);
