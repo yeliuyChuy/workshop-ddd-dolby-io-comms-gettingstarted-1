@@ -912,8 +912,8 @@ async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 		console.log("Recordings are available now !");
 		console.log("==============================");
 		const url = result.records[0].splits[recordingIdx].url;
-		// console.log(result);
-		console.log(url);
+		console.log(result);
+		// console.log(url);
 		return result;
 	}
 }
