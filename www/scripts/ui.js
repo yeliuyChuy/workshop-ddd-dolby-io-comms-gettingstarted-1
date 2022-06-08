@@ -179,11 +179,7 @@ const initUI = async () => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
-
-		console.log("----------------");
-		console.log(participants);
-		console.log(participants.size);
-
+		
 		VoxeetSDK.conference
 			.leave()
 			.then(() => {
@@ -215,7 +211,11 @@ const initUI = async () => {
 
 						try {
 							let url = checkIfRecordingsAvailable(conferenceID).then((results) => results);
-							console.log(url);
+
+							for (let recordingIdx = 0; recordingIdx < participants.size; recordingIdx++) {
+								console.log(recordingIdx);
+							}
+							//console.log(url);
 						} catch (e) {
 							alert('Something went wrong : ' + e);
 						}
