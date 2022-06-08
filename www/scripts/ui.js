@@ -179,7 +179,7 @@ const initUI = async () => {
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
-		
+
 		VoxeetSDK.conference
 			.leave()
 			.then(() => {
@@ -210,33 +210,16 @@ const initUI = async () => {
 
 
 						try {
-							let url = checkIfRecordingsAvailable(conferenceID).then((results) => results);
+							// let url = checkIfRecordingsAvailable(conferenceID).then((results) => results);
 
 							for (let recordingIdx = 0; recordingIdx < participants.size; recordingIdx++) {
 								console.log(recordingIdx);
+								let url = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
 							}
 							//console.log(url);
 						} catch (e) {
 							alert('Something went wrong : ' + e);
 						}
-						//retriveRecordings(conferenceID);
-
-						// console.log(" === Debug ===");
-						// let jwttoken = await jwtToken();
-
-						// const options = {
-						// 	method: 'GET',
-						// 	headers: {
-						// 		Accept: 'application/json',
-						// 		'Content-Type': 'application/json',
-						// 		Authorization: `Bearer ${jwttoken}`
-						// 	}
-						// 	};
-							
-						// 	fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-						// 	.then(response => response.json())
-						// 	.then(response => console.log(response))
-						// 	.catch(err => console.error(err));
 						
 					})
 					.catch((err) => console.error(err));
@@ -901,7 +884,7 @@ async function startAudioAnalysis() {
 	}
 }
 
-async function checkIfRecordingsAvailable(conferenceID) {
+async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 
 	let jwttoken = await jwtToken();
 	const options = {
@@ -928,7 +911,7 @@ async function checkIfRecordingsAvailable(conferenceID) {
 	} else {
 		console.log("Recordings are available now !");
 		console.log("==============================");
-		const url = result.records[0].splits[0].url;
+		const url = result.records[0].splits[recordingIdx].url;
 		// console.log(result);
 		// console.log(url);
 		return result;
