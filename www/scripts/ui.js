@@ -146,13 +146,18 @@ const initUI = async () => {
 						if (videoDevices.options.length == 0) {
 							enumerateMediaDevices();
 						}
+						// Recording locator (both video and audio) meant to be deleted in full automation
+						// Upload and Processing part, shall appear after leave the meeting.
+						document.getElementById("upload-btn").classList.add("d-none");
+						document.getElementById("process-btn").classList.add("d-none");
+
 						VoxeetSDK.recording
 							.start()
 							.then(() => {
 								recordStatus.innerText = "Recording...Always on by default";
 								document.getElementById("record-status").classList.remove("d-none");
 							})
-			.catch((err) => console.error(err));
+							.catch((err) => console.error(err));
 					})
 					.catch((err) => console.error(err));
 			})
@@ -175,7 +180,7 @@ const initUI = async () => {
 				document.getElementById("record-status").classList.add("d-none");
 			})
 			.catch((err) => console.error(err));
-		
+
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
@@ -184,7 +189,7 @@ const initUI = async () => {
 			.leave()
 			.then(() => {
 				// See Docs:  https://docs.dolby.io/communications-apis/docs/initializing-javascript#open-a-session
-				// close the session				
+				// close the session
 				VoxeetSDK.session
 					.close()
 					.then(() => {
@@ -204,24 +209,36 @@ const initUI = async () => {
 						document.getElementById("start-recording-btn").classList.add("d-none");
 						document.getElementById("stop-recording-btn").classList.add("d-none");
 						document.getElementById("participants-settings").classList.add("d-none");
-						document.getElementById("uploadInput").disabled = false;
+						// Recording locator (both video and audio) meant to be deleted in full automation
+						// Upload and Processing part, shall appear after leave the meeting.
 						document.getElementById("upload-btn").classList.remove("d-none");
-						document.getElementById("process-btn").classList.remove("d-none");
-
+						document.getElementById("process-btn").classList.add("d-none");
 
 						try {
 							for (let recordingIdx = 0; recordingIdx < participants.size - 1; recordingIdx++) {
 								let retrivedUrl = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
 							}
+							document.getElementById("upload-btn").onclick = async () => {
+								document.getElementById("upload-btn").classList.add("d-none");
+								document.getElementById("process-btn").classList.remove("d-none");
+								startAudioAnalysis(retrivedUrl).catch((err) => console.error(err));
+							};
+
+							document.getElementById("process-btn").onclick = async () => {
+								document.getElementById("upload-btn").classList.remove("d-none");
+								document.getElementById("process-btn").classList.add("d-none");
+
+							};
 						} catch (e) {
 							alert('Something went wrong : ' + e);
 						}
-						
 					})
 					.catch((err) => console.error(err));
 			})
 			.catch((err) => console.error(err));
 	};
+
+
 
 	// Determine and update UI based on who is speaking
 	const beginIsSpeaking = () => {
@@ -324,7 +341,6 @@ const initUI = async () => {
 			})
 			.catch((err) => console.error(err));
 	};
-	
 
 	// document.getElementById("start-recording-btn").onclick = async () => {
 	// 	let recordStatus = document.getElementById("record-status");
@@ -654,6 +670,8 @@ const addMuteListeners = () => {
 
 const validFiles = ["wav", "mp3", "mp4", "m4a", "mov", "3gp", "m4b", "acc"]; //https://docs.dolby.io/media-apis/docs/supported-formats
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+//I know it is insecure, but only use it for demo purpose.
+const API_KEY = "xi0n0DImNYJKGrZSJJXFDm7ZJrVZvC4G"
 
 async function jwtToken() {
 	return fetch(jwtServerURL, {
@@ -670,7 +688,7 @@ async function jwtToken() {
 
 async function getResults() {
 	//Gets and displays the results of the Analyze job
-	const mAPIKey = process.env.API_KEY;
+	const mAPIKey = API_KEY;
 	let output_percent = document.getElementById("percentage_music");
 	let output_num = document.getElementById("number_of_music_sections");
 
@@ -679,7 +697,7 @@ async function getResults() {
 		headers: { Accept: "application/octet-stream", "x-api-key": mAPIKey },
 	};
 
-	let json_loc = await fetch("https://api.dolby.com/media/output?url=dlb://file_output.json", options)
+	let json_loc = await fetch("https://api.dolby.com/media/output?url=dlb://out/file_output_teamC.wav", options)
 		.then((response) => response.json())
 		.catch((err) => console.error(err));
 
@@ -713,7 +731,7 @@ async function getResults() {
 		cell4.innerHTML = String(loud);
 		cell5.innerHTML = String(genre);
 	}
-	document.getElementById("myBtn").innerText = "Complete";
+	document.getElementById("process-btn").innerText = "Complete";
 	document.getElementById("download").disabled = false;
 	document.getElementById("download").style.visibility = "visible";
 
@@ -726,13 +744,14 @@ async function getResults() {
 
 async function checkJobStatus(jobID) {
 	//Checks the status of the created job using the jobID
-	const mAPIKey = process.env.API_KEY;
+	const mAPIKey = API_KEY;
 	const options = {
 		method: "GET",
 		headers: { Accept: "application/json", "x-api-key": mAPIKey },
 	};
 
-	let result = await fetch("https://api.dolby.com/media/analyze?job_id=".concat(jobID), options).then((response) =>
+	console.log(options);
+	let result = await fetch("https://api.dolby.com/media/transcode?job_id=".concat(jobID), options).then((response) =>
 		response.json()
 	);
 	console.log(result);
@@ -742,22 +761,22 @@ async function checkJobStatus(jobID) {
 
 	if (result.status == "Failed" || result.status == 401) {
 		console.log("ERROR: Job Failed");
-		const start_button = document.getElementById("myBtn");
+		const start_button = document.getElementById("process-btn");
 		start_button.innerText = "FAILED!";
 		throw new Error("Job Failed: Check file type and Media API Key");
 	} else if (result.progress != "100") {
 		await delay(3000);
-		checkJobStatus(jobID, mAPIKey);
+		checkJobStatus(jobID);
 	} else {
 		elem.textContent = "Complete";
-		let results = getResults(mAPIKey);
+		let results = getResults();
 		return results;
 	}
 }
 
 async function startJob(fileLocation) {
 	//Starts an Analyze Job
-	const mAPIKey = process.env.API_KEY;
+	const mAPIKey = API_KEY;
 	const options = {
 		method: "POST",
 		headers: {
@@ -766,117 +785,41 @@ async function startJob(fileLocation) {
 			"x-api-key": mAPIKey,
 		},
 		body: JSON.stringify({
-			content: { silence: { threshold: -60, duration: 2 } },
 			input: fileLocation,
-			output: "dlb://file_output.json",
+			outputs: [
+        		{
+            "id" : "my_wav",
+            "destination" : "dlb://out/output.wav",
+            "kind" : "wav"
+        		}
+    		]
 		}),
 	};
-
-	let resp = await fetch("https://api.dolby.com/media/analyze", options)
+	console.log(options)
+	let resp = await fetch("https://api.dolby.com/media/transcode", options)
 		.then((response) => response.json())
 		.catch((err) => console.error(err));
 	console.log(resp);
 	return resp.job_id;
 }
 
-async function uploadFile(fileType) {
-	//Uploads the file to the Dolby.io server
-	const mAPIKey = process.env.API_KEY;
-	let audioFile = document.getElementById("uploadInput").files[0];
-	let formData = new FormData();
-	var xhr = new XMLHttpRequest();
-	formData.append(fileType, audioFile);
 
-	const options = {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			"x-api-key": mAPIKey,
-		},
-		body: JSON.stringify({ url: "dlb://file_input.".concat(fileType) }),
-	};
-	document.getElementById("myBtn").innerText = "Uploading ...";
-
-	let resp = await fetch("https://api.dolby.com/media/input", options)
-		.then((response) => response.json())
-		.catch((err) => console.error(err));
-	console.log(resp.url);
-
-	xhr.open("PUT", resp.url, true);
-	xhr.setRequestHeader("Content-Type", fileType);
-	xhr.onload = () => {
-		if (xhr.status === 200) {
-			console.log("File Upload Success");
-		}
-	};
-	xhr.onerror = () => {
-		console.log("error");
-	};
-	xhr.send(formData);
-	let rs = xhr.readyState;
-	while (rs != 4) {
-		await delay(1000); //Delay to slow readyState checking
-		rs = xhr.readyState;
-	}
-
-	return "dlb://file_input.".concat(fileType);
-}
-
-function updateSize() {
-	//Function for stating the size of the selected file
-	const start_button = document.getElementById("myBtn");
-
-	let nBytes = 0,
-		oFiles = this.files,
-		nFiles = oFiles.length;
-	for (let nFileId = 0; nFileId < nFiles; nFileId++) {
-		nBytes += oFiles[nFileId].size;
-	}
-	let sOutput = (nBytes / 1000000).toFixed(2) + " Megabytes";
-	document.getElementById("fileSize").innerHTML = sOutput;
-	let fileType = this.value.split(".").at(-1);
-
-	if (validFiles.includes(fileType)) {
-		start_button.textContent = "Start Job";
-		start_button.disabled = false;
-	} else {
-		start_button.textContent = "ERROR: PICK A VALID FILE TYPE!";
-		start_button.disabled = true;
-	}
-}
-
-function enableFile() {
-	//Checks to see that the appropriate steps are being followed to start a job
-	let selectedFile = document.getElementById("uploadInput");
-	selectedFile.disabled = false;
-}
-
-async function startAudioAnalysis() {
+async function startAudioAnalysis(url) {
 	//Starts the audio analysis pipeline:
 	//Upload -> Call job -> Check Job Status - > Get Results
 
 	try {
 		console.log("Job starting");
-		let selectedFile = document.getElementById("uploadInput");
-		let mAPIKey = document.getElementById("mAPIKey").value;
-		let fileType = selectedFile.value.split(".")[1];
-
-		document.getElementById("myBtn").disabled = true;
-		selectedFile.disabled = true;
-
-		let fileLocation = await Promise.resolve(uploadFile(fileType, mAPIKey).then((results) => results));
-		document.getElementById("myBtn").innerText = "Running...";
-		let jobID = await startJob(fileLocation, mAPIKey).then((results) => results);
-		let results = await checkJobStatus(jobID, mAPIKey).then((results) => results);
+		document.getElementById("process-btn").disabled = true;
+		let fileLocation = url;
+		document.getElementById("process-btn").innerText = "Running...";
+		let jobID = await startJob(fileLocation).then((results) => results);
+		let results = await checkJobStatus(jobID).then((results) => results);
 	} catch {
 		//Reset if something fails
-		document.getElementById("uploadInput").value = null;
-		document.getElementById("mAPIKey").value = null;
-		document.getElementById("myBtn").disabled = false;
-		document.getElementById("myBtn").textContent = "Start Job";
-		document.getElementById("myBtn").disabled = true;
-		document.getElementById("fileSize").innerHTML = "File Size: 0";
+		document.getElementById("process-btn").disabled = false;
+		document.getElementById("process-btn").textContent = "FAILED";
+		document.getElementById("process-btn").disabled = true;
 	}
 }
 
@@ -905,12 +848,12 @@ async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 		await delay(10000);
 		checkIfRecordingsAvailable(conferenceID, recordingIdx);
 	} else {
-		// console.log("Recordings are available now !");
-		// console.log("------------------------------");
-		// console.log(recordingIdx);
+		console.log("Recordings are available now !");
+		console.log("------------------------------");
+		console.log(recordingIdx);
 		const url = result.records[0].splits[recordingIdx].url;
-		// console.log(result);
-		// console.log(url);
+		console.log(result);
+		console.log(url);
 		return url;
 	}
 }
