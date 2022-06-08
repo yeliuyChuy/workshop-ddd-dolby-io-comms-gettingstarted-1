@@ -907,7 +907,7 @@ async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 		throw new Error("Job Failed: authorization data is invalid or expired.");
 	} else if (result.status == 400 || result.status == 404) {
 		await delay(10000);
-		checkIfRecordingsAvailable(conferenceID);
+		checkIfRecordingsAvailable(conferenceID, recordingIdx);
 	} else {
 		console.log("Recordings are available now !");
 		console.log("==============================");
