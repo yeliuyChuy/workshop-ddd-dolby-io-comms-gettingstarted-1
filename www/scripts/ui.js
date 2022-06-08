@@ -180,11 +180,10 @@ const initUI = async () => {
 		let conferenceID = VoxeetSDK.conference.current.id;
 		let participants = VoxeetSDK.conference.participants;
 
-		for (let participant in participants) {
-			console.log("!!!!!!!!!!!!!!");
-			console.log(participant);
+		for (let i in participants) {
+			console.log("----------");
+			console.log(i);
 		}
-
 
 		VoxeetSDK.conference
 			.leave()
