@@ -938,7 +938,8 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		console.log("Recordings are available now !");
 		//let results = getResults(mAPIKey);
 		//let recordings = result.records.splits.url;
-		console.log(result);
+		console.log("====================");
+		console.log(result.records);
 		//for (let participant of participants) {
 		return result;
 	}
