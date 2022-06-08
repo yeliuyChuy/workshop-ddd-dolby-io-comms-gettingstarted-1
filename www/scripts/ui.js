@@ -929,8 +929,8 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		checkIfRecordingsAvailable(conferenceID);
 	} else {
 		console.log("Recordings are available now !");
-		console.log("++++++++++");
-		const recording = result.records[0].splits[5];
+		console.log("---------");
+		const recording = result.records[0].splits[0];
 		console.log(result);
 		console.log(recording);
 		return result;
