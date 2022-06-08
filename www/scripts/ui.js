@@ -178,13 +178,13 @@ const initUI = async () => {
 		
 		// Access recordings
 		let conferenceID = VoxeetSDK.conference.current.id;
-		// let jwttoken = await jwtToken();
-		// console.log(conferenceID);
-		// console.log(jwttoken);
-		
-		
+		let participants = VoxeetSDK.conference.participants;
 
-		
+		for (let participant of participants) {
+			console.log("!!!!!!!!!!!!!!");
+			console.log(participant);
+		}
+
 
 		VoxeetSDK.conference
 			.leave()
@@ -216,8 +216,8 @@ const initUI = async () => {
 
 
 						try {
-							let results = checkIfRecordingsAvailable(conferenceID).then((results) => results);
-							console.log(results);
+							let url = checkIfRecordingsAvailable(conferenceID).then((results) => results);
+							console.log(url);
 						} catch (e) {
 							alert('Something went wrong : ' + e);
 						}
@@ -929,10 +929,10 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		checkIfRecordingsAvailable(conferenceID);
 	} else {
 		console.log("Recordings are available now !");
-		console.log("---------");
-		const recording = result.records[0].splits[0].url;
-		console.log(result);
-		console.log(recording);
+		console.log("==============================");
+		const url = result.records[0].splits[0].url;
+		// console.log(result);
+		// console.log(url);
 		return result;
 	}
 }
