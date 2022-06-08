@@ -213,7 +213,6 @@ const initUI = async () => {
 							// let url = checkIfRecordingsAvailable(conferenceID).then((results) => results);
 
 							for (let recordingIdx = 0; recordingIdx < participants.size; recordingIdx++) {
-								console.log(recordingIdx);
 								let result = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
 								console.log(result);
 							}
@@ -911,6 +910,7 @@ async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 	} else {
 		console.log("Recordings are available now !");
 		console.log("==============================");
+		console.log(recordingIdx);
 		const url = result.records[0].splits[recordingIdx].url;
 		console.log(result);
 		// console.log(url);
