@@ -214,9 +214,9 @@ const initUI = async () => {
 
 							for (let recordingIdx = 0; recordingIdx < participants.size; recordingIdx++) {
 								console.log(recordingIdx);
-								let url = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
+								let result = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
+								console.log(result);
 							}
-							//console.log(url);
 						} catch (e) {
 							alert('Something went wrong : ' + e);
 						}
@@ -913,7 +913,7 @@ async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 		console.log("==============================");
 		const url = result.records[0].splits[recordingIdx].url;
 		// console.log(result);
-		// console.log(url);
+		console.log(url);
 		return result;
 	}
 }
