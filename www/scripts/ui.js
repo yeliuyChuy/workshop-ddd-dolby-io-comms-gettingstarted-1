@@ -217,12 +217,10 @@ const initUI = async () => {
 
 						try {
 							let results = checkIfRecordingsAvailable(conferenceID).then((results) => results);
+							console.log(results);
 						} catch (e) {
 							alert('Something went wrong : ' + e);
 						}
-
-						let results = await checkJobStatus(jobID, mAPIKey).then((results) => results);
-						console.log(results);
 						//retriveRecordings(conferenceID);
 
 						// console.log(" === Debug ===");
