@@ -936,35 +936,8 @@ async function checkIfRecordingsAvailable(conferenceID) {
 		checkIfRecordingsAvailable(conferenceID);
 	} else {
 		console.log("Recordings are available now !");
-		//let results = getResults(mAPIKey);
-		//let recordings = result.records.splits.url;
-		console.log("====================");
-		console.log(result.records);
-		//for (let participant of participants) {
+		console.log("++++++++++++++++++++++++++++");
+		console.log(result.records.splits);
 		return result;
 	}
 }
-
-// async function retriveRecordings(conferenceID) {
-
-// 	try {
-// 		let jwttoken = await jwtToken();
-// 		console.log(jwttoken);
-// 		console.log(conferenceID);
-// 		const options = {
-// 			method: 'GET',
-// 			headers: {
-// 				Accept: 'application/json',
-// 				'Content-Type': 'application/json',
-// 				Authorization: `Bearer ${jwttoken}`
-// 			}
-// 		};
-
-// 		fetch(`https://api.voxeet.com/v1/monitor/conferences/${conferenceID}/recordings/audio`, options)
-// 		.then(response => response.json())
-// 		.then(response => console.log(response))
-// 		.catch(err => console.error(err));
-// 	} catch (e) {
-// 		alert('Something went wrong : ' + e);
-// 	}
-// }
