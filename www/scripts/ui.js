@@ -210,11 +210,8 @@ const initUI = async () => {
 
 
 						try {
-							// let url = checkIfRecordingsAvailable(conferenceID).then((results) => results);
-
 							for (let recordingIdx = 0; recordingIdx < participants.size - 1; recordingIdx++) {
-								let result = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
-								console.log(result);
+								let retrivedUrl = checkIfRecordingsAvailable(conferenceID, recordingIdx).then((results) => results);
 							}
 						} catch (e) {
 							alert('Something went wrong : ' + e);
@@ -908,12 +905,12 @@ async function checkIfRecordingsAvailable(conferenceID, recordingIdx) {
 		await delay(10000);
 		checkIfRecordingsAvailable(conferenceID, recordingIdx);
 	} else {
-		console.log("Recordings are available now !");
-		console.log("------------------------------");
-		console.log(recordingIdx);
+		// console.log("Recordings are available now !");
+		// console.log("------------------------------");
+		// console.log(recordingIdx);
 		const url = result.records[0].splits[recordingIdx].url;
-		console.log(result);
-		console.log(url);
-		return result;
+		// console.log(result);
+		// console.log(url);
+		return url;
 	}
 }
