@@ -930,8 +930,8 @@ async function checkIfRecordingsAvailable(conferenceID) {
 	} else {
 		console.log("Recordings are available now !");
 		//let results = getResults(mAPIKey);
-		console.log(result);
-		return result;
+		console.log(result.records.splits.url);
+		return result.records.splits.url;
 	}
 }
 
